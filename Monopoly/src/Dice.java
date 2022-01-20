@@ -1,5 +1,5 @@
 
-public class dice {
+public class Dice {
 	private static int totalDice;
 	
 	public static int runDice() {

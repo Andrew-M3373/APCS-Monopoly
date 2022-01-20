@@ -6,14 +6,16 @@ public class Player {
 	private int money;
 	private int location;
 	private boolean inJail;
+	private int doublesCounter;
 	private ArrayList <String[]> inventory = new ArrayList <String[]> ();
 	
-	public Player (String n, int m, int l, boolean j, ArrayList <String[]> i) {
+	public Player (String n, int m, int l, boolean j, int dc, ArrayList <String[]> i) {
 		
 		name = n;
 		money = m;
 		location = l;
 		inJail = j;
+		doublesCounter = dc;
 		inventory = i;
 		
 	}
@@ -54,6 +56,14 @@ public class Player {
 
 	public void setInJail(boolean inJail) {
 		this.inJail = inJail;
+	}
+
+	public int getDoublesCounter() {
+		return doublesCounter;
+	}
+
+	public void setDoublesCounter(int doublesCounter) {
+		this.doublesCounter = doublesCounter;
 	}
 	
 	
