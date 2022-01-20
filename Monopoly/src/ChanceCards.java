@@ -1,55 +1,26 @@
 
 public class ChanceCards extends Game {
 
-	static int randomChance = (int)(Math.random() * 5) + 1;
-	
-	int location;
-	
+	public static int RunChanceCards() {
 
-	public static int ChanceCards() {
-
-			System.out.println("You have landed on a chance card");
+//		System.out.println("You have landed on a chance card");
 			
-			if(randomChance == 1)
-				{	
-					
-					System.out.println("Go To Jail");
-					return 10;
-					
-				}
-			
-			else if(randomChance == 2)
-				{
-					System.out.println("Go to Start Space and collect $200");
-					return 0; 
-					
-				}
-			
-			else if(randomChance == 3)
-				{
-					System.out.println("Go to Pacific Avenue");
-					return 31;
-				}
+		int randomChance = (int)(Math.random() * 5) + 1;
 		
-			else if(randomChance == 4)
-				{
-					System.out.println("Go to Electric Company");
-					return 12;
-				}
-			
-			else if(randomChance == 5)
-				{
-					System.out.println("Go to Income Tax");
-					return 4;
-					
-				}
-			
-			else 
-				{
-					System.out.println("error");
-				}
-			
-			return 0;
+		System.out.println("******************************");
+		switch (randomChance) {
+		case 1: System.out.printf("* Go to %-20s *\n******************************\n", Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getSpecialSpaces().getJailTitle());
+		return 10;
+		case 2: System.out.printf("* Go to %-20s *\n******************************\n", Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getGoName() + " and collect $" + Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getSpecialSpaces().getGoPrice());
+		return 40; 
+		case 3: System.out.printf("* Go to %-20s *\n******************************\n", Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getProperties().getPropertyGroup7().getProperty1Name());
+		return 31;
+		case 4: System.out.printf("* Go to %-20s *\n******************************\n", Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getUtilityGroup().getProperty1Name());
+		return 12;
+		case 5: System.out.printf("* Go to %-20s *\n******************************\n", Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getSpecialSpaces().getIncomeTaxTitle());
+		return 4;
+		}
+		return 0;
 	
 		
 	
