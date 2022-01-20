@@ -5,13 +5,15 @@ public class Player {
 	private String name;
 	private int money;
 	private int location;
+	private boolean inJail;
 	private ArrayList <String[]> inventory = new ArrayList <String[]> ();
 	
-	public Player (String n, int m, int l, ArrayList <String[]> i) {
+	public Player (String n, int m, int l, boolean j, ArrayList <String[]> i) {
 		
 		name = n;
 		money = m;
 		location = l;
+		inJail = j;
 		inventory = i;
 		
 	}
@@ -45,5 +47,15 @@ public class Player {
 	{
 		inventory.add(s);
 	}
+
+	public boolean isInJail() {
+		return inJail;
+	}
+
+	public void setInJail(boolean inJail) {
+		this.inJail = inJail;
+	}
+	
+	
 	
 }

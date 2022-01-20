@@ -49,7 +49,7 @@ public class Database {
 			
 				//new ChanceCards(), // Import Chance cards with a .csv file in the format: cardTitle,cardContent,Action
 				//new CommunityChestCards(), // Import Community Chest cards with a .csv file in the format: cardTitle,cardContent,Action
-				new Pieces("R2-D2", "Han Solo", "Princess Leia", "Luke Skywalker", "Darth Vader", "Storm Trooper", "Bobo Fett", "Chewbacca")
+				new Pieces("R2-D2", "Han Solo", "Princess Leia", "Luke Skywalker", "Darth Vader", "Storm Trooper", "Boba Fett", "Chewbacca")
 				));
 
 	}
