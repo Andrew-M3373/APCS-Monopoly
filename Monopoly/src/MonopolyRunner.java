@@ -85,6 +85,7 @@ public class MonopolyRunner
 								// Reverse movement direction if on Free Parking
 								if (p.getLocation() == 20) {
 									p.setReverse(p.getReverse()*-1);
+									System.out.println("Token direction has changed!");
 								}
 								
 								// Pay income tax if needed
@@ -173,9 +174,10 @@ public class MonopolyRunner
 			// option of how many players will be playing
 			System.out.println("\nWelcome to the game of " + Database.gameDatabase.get(gameIndex).getTitle() + "!");
 			System.out.println("Extra rules:"
-					+ "\n\t(1) Press the letter \"i\" after your turn to view each player's inventory"
-					+ "\n\t(2) Tokens move in reverse after landing on " + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getFreeParkingTitle()
-					+ "\n\t(3) Debugging note: the letter \"i\" may be substituted for \"j\" or \"fp\" to move the token directly to Jail or Free Parking, respectively");
+					+ "\n\t(1) All tokens start with $1500"
+					+ "\n\t(2) Press the letter \"i\" after your turn to view each player's inventory"
+					+ "\n\t(3) Tokens move in reverse after landing on " + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getFreeParkingTitle()
+					+ "\n\t(4) Debugging note: the letter \"i\" may be substituted for \"j\" or \"fp\" to move the token directly to Jail or Free Parking, respectively");
 			System.out.println("\nHow many players?");
 			int playerCount = Integer.parseInt(scanner.next());
 			scanner.nextLine();
@@ -303,14 +305,14 @@ public class MonopolyRunner
 						}
 					});
 					
-					String format = format("| %-25s | %-15s | %-5s |%n");
-					System.out.println(format("a===========================b=================b=======c"));
-					System.out.println(format("| ") + "Property title" + format("            | ") + "Group" + format("           | ") + "Price" + format(" |"));
-					System.out.println(format("j===========================e=================e=======f"));
+					String format = format("| %-35s | %-15s | %-5s |%n");
+					System.out.println(format("a=====================================b=================b=======c"));
+					System.out.println(format("| ") + "Property title" + format("                      | ") + "Group" + format("           | ") + "Price" + format(" |"));
+					System.out.println(format("j=====================================e=================e=======f"));
 					for (String[] s : p.getInventory()) {
 						System.out.printf(format,s[0],s[1],s[2]);
 					}
-					System.out.println(format("g===========================h=================h=======i"));
+					System.out.println(format("g=====================================h=================h=======i"));
 				}
 				
 				boolean viewingInventory = true;

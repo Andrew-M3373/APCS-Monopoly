@@ -43,8 +43,8 @@ public class Database {
 						new PropertyGroup8("Dark Blue","Corescant: Monument Square",350,37,"Corescant: Imperial Palace",400,39)),
 
 				new UtilityGroup("Utility","Moisture Farm",110,12,"Reactor Core", 115,28),
-				new RailroadGroup("Starships", 200, "Tie Fighter", 5, "X-Wing", 15, "Millennium Falcon", 25, "Star Destroyer", 35),
-				new SpecialSpaces("Go", 200, "Income Tax", 200, "Jail", 50, "Free Parking", 0, "Go To Jail", 0, "Luxury Tax", 100),
+				new RailroadGroup("Starship", 200, "The Tie Fighter", 5, "The X-Wing", 15, "The Millennium Falcon", 25, "The Star Destroyer", 35),
+				new SpecialSpaces("Go", 200, "Income Tax", 200, "Jail", 50, "Spacecraft Parking", 0, "Go To Jail", 0, "Luxury Tax", 100),
 
 			
 				//new ChanceCards(), // Import Chance cards with a .csv file in the format: cardTitle,cardContent,Action
