@@ -31,7 +31,7 @@ public class MonopolyRunner
 				// for loop that allows each player to have 1 turn before moving on
 				for (Player p : playerList) {
 					int doublesCounter = 0;
-					System.out.println("\n\n\n" + p.getName() + "'s turn.");
+					System.out.println("\n\n\n" + p.getName() + "'s turn");
 					int diceRoll = 0;
 					rollAgain = true;
 					p.setDoublesCounter(0);
@@ -85,6 +85,13 @@ public class MonopolyRunner
 									p.setReverse(p.getReverse()*-1);
 								}
 								
+								// Pay income tax if needed
+								if (p.getLocation() == 4)
+									incomeTax(p);
+								// Pay luxury tax if needed
+								if (p.getLocation() == 38) 
+									luxuryTax(p);
+								
 								
 								// if landed on a purchasable property, execute this. 
 								if (p.getLocation() != 0 && p.getLocation() != 40 && p.getLocation() != 7 && p.getLocation() != 22 && p.getLocation() != 36 && p.getLocation() != 2 && p.getLocation() != 17 && p.getLocation() != 33 && p.getLocation() != 0 && p.getLocation() != 10 && p.getLocation() != 20 && p.getLocation() != 30 && p.getLocation() != 38 && p.getLocation() != 4) {
@@ -133,7 +140,7 @@ public class MonopolyRunner
 									p.setJailCounter(0);
 								}
 								else if (p.getJailCounter() >= 3) {
-									System.out.println("You didn't roll doubles on your third try, so you paid $50 to get out of jail.");
+									System.out.println("You didn't roll doubles on your third try, so you paid $50 to get out of jail");
 									p.setInJail(false);
 									p.setMoney(p.getMoney()-50);
 									p.setJailCounter(0);
@@ -171,7 +178,7 @@ public class MonopolyRunner
 			int playerCount = Integer.parseInt(scanner.next());
 			scanner.nextLine();
 			if (playerCount > 8 || playerCount < 1) {
-				System.out.println("Please try again with a valid input.");
+				System.out.println("Please try again with a valid input");
 				System.exit(0);
 			}
 			
@@ -268,7 +275,7 @@ public class MonopolyRunner
 					p.setLocation(10);
 					rollAgain = false; 
 					doubles = false;
-					System.out.println("Press enter to continue or \"i\" to view the inventory.");
+					System.out.println("Press enter to continue or \"i\" to view the inventory");
 					pressEnterOrI(p,scanner);
 				}
 			}
@@ -280,8 +287,10 @@ public class MonopolyRunner
 			String input = scanner.nextLine();
 			
 			if (input.equals("i")) {
+				System.out.println("\nCurrent balance: $" + p.getMoney());
+				
 				if (p.getInventory().size() == 0)
-					System.out.println("\n" + p.getName() + " does not own any properties.");
+					System.out.println(p.getName() + " does not own any properties");
 				else {
 					System.out.println("\n" + p.getName() + "'s list of owned properties:");
 					
@@ -292,14 +301,16 @@ public class MonopolyRunner
 				
 				boolean viewingInventory = true;
 				do {
-					System.out.println("\nPress enter to continue or a player number to view their inventory.");
+					System.out.println("\nPress enter to continue or a player number to view their inventory");
 					for (int i = 0; i < playerList.size(); i++) {
 						System.out.println("\t(" + (i+1) + ") " + playerList.get(i).getName());
 					}
 					input = scanner.nextLine();
 					if (!input.equals("")) {
+						System.out.println("\nCurrent balance: $" + p.getMoney());
+						
 						if (playerList.get(Integer.parseInt(input)-1).getInventory().size() == 0)
-							System.out.println("\n" + playerList.get(Integer.parseInt(input)-1).getName() + " does not own any properties.");
+							System.out.println(playerList.get(Integer.parseInt(input)-1).getName() + " does not own any properties");
 						else {
 							for (int i = 0; i < playerList.get(Integer.parseInt(input)-1).getInventory().size(); i++)
 								System.out.println(playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[0]);
@@ -321,5 +332,15 @@ public class MonopolyRunner
 				p.setLocation(20);
 				p.setReverse(p.getReverse()*-1);
 			}
+		}
+		
+		public static void incomeTax(Player p) {
+			System.out.println("You have paid $" + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getIncomeTaxPrice());
+			p.setMoney(p.getMoney()-Database.gameDatabase.get(gameIndex).getSpecialSpaces().getIncomeTaxPrice());
+		}
+		
+		public static void luxuryTax(Player p) {
+			System.out.println("You have paid $" + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getLuxuryTaxPrice());
+			p.setMoney(p.getMoney()-Database.gameDatabase.get(gameIndex).getSpecialSpaces().getLuxuryTaxPrice());
 		}
 	}
