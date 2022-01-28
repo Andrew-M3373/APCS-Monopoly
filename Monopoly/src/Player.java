@@ -24,6 +24,10 @@ public class Player {
 		
 	}
 
+	public void setInventory(ArrayList<String[]> inventory) {
+		this.inventory = inventory;
+	}
+
 	public int getReverse() {
 		return reverse;
 	}

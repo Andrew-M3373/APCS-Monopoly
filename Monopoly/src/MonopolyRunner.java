@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class MonopolyRunner
@@ -207,35 +209,35 @@ public class MonopolyRunner
 			case 7: case 22: case 36: return "00::Chance";
 			case 2: case 17: case 33: return "00::Community Chest"; 
 			// group 1
-			case 1: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 3: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
+			case 1: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getGroupTitle(); 
+			case 3: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup1().getGroupTitle(); 
 			// group 2
-			case 6: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 8: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle();
-			case 9: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle();
+			case 6: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getGroupTitle(); 
+			case 8: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getGroupTitle();
+			case 9: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup2().getGroupTitle();
 			// group 3
-			case 11: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 13: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 14: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
+			case 11: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getGroupTitle(); 
+			case 13: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getGroupTitle(); 
+			case 14: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup3().getGroupTitle(); 
 			// group 4
-			case 16: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 18: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 19: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
+			case 16: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getGroupTitle(); 
+			case 18: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getGroupTitle(); 
+			case 19: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup4().getGroupTitle(); 
 			// group 5
-			case 21: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 23: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 24: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
+			case 21: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getGroupTitle(); 
+			case 23: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getGroupTitle(); 
+			case 24: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup5().getGroupTitle(); 
 			// group 6
-			case 26: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 27: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 29: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
+			case 26: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getGroupTitle(); 
+			case 27: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getGroupTitle(); 
+			case 29: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup6().getGroupTitle(); 
 			// group 7
-			case 31: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 32: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 34:return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
+			case 31: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getGroupTitle(); 
+			case 32: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getGroupTitle(); 
+			case 34:return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty3Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getProperty3Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup7().getGroupTitle(); 
 			// group 8
-			case 37: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
-			case 39: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getGroupTitle(); 
+			case 37: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty1Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty1Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getGroupTitle(); 
+			case 39: return Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty2Price() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getProperty2Name() + "::" + Database.gameDatabase.get(gameIndex).getProperties().getPropertyGroup8().getGroupTitle(); 
 			// special
 			case 0: return Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoPrice() + "::" + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoTitle(); 
 			case 4: return Database.gameDatabase.get(gameIndex).getSpecialSpaces().getIncomeTaxPrice() + "::" + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getIncomeTaxTitle();
@@ -294,9 +296,21 @@ public class MonopolyRunner
 				else {
 					System.out.println("\n" + p.getName() + "'s list of owned properties:");
 					
+					// Sort ArrayList by property group type
+					Collections.sort(p.getInventory(),new Comparator <String[]>() {
+						public int compare(String[] a, String[] b) {
+							return -1 * a[1].compareToIgnoreCase(b[1]);
+						}
+					});
+					
+					String format = format("| %-25s | %-15s | %-5s |%n");
+					System.out.println(format("a===========================b=================b=======c"));
+					System.out.println(format("| ") + "Property title" + format("            | ") + "Group" + format("           | ") + "Price" + format(" |"));
+					System.out.println(format("j===========================e=================e=======f"));
 					for (String[] s : p.getInventory()) {
-						System.out.println(s[0]);
+						System.out.printf(format,s[0],s[1],s[2]);
 					}
+					System.out.println(format("g===========================h=================h=======i"));
 				}
 				
 				boolean viewingInventory = true;
@@ -312,9 +326,15 @@ public class MonopolyRunner
 						if (playerList.get(Integer.parseInt(input)-1).getInventory().size() == 0)
 							System.out.println(playerList.get(Integer.parseInt(input)-1).getName() + " does not own any properties");
 						else {
+							System.out.println("\n" + playerList.get(Integer.parseInt(input)-1).getName() + "'s list of owned properties:");
+							
+							String format = format("| %-25s | %-15s | %-5s |%n");
+							System.out.println(format("a===========================b=================b=======c"));
+							System.out.println(format("| ") + "Property title" + format("            | ") + "Group" + format("           | ") + "Price" + format(" |"));
+							System.out.println(format("j===========================e=================e=======f"));
 							for (int i = 0; i < playerList.get(Integer.parseInt(input)-1).getInventory().size(); i++)
-								System.out.println(playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[0]);
-								System.out.println("\n" + playerList.get(Integer.parseInt(input)-1).getName() + "'s list of owned properties:");
+								System.out.printf(format,playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[0],playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[1],playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[2]);
+							System.out.println(format("g===========================h=================h=======i"));
 						}
 					}
 					else viewingInventory = false;
@@ -332,6 +352,20 @@ public class MonopolyRunner
 				p.setLocation(20);
 				p.setReverse(p.getReverse()*-1);
 			}
+		}
+		
+		private static String format(String string) {
+			return string.replace("a", "\u250c")
+					.replace("b", "\u252c")
+					.replace("c", "\u2510")
+					.replace('j', '\u251c')
+	                .replace('e', '\u253c')
+	                .replace('f', '\u2524')
+	                .replace('g', '\u2514')
+	                .replace('h', '\u2534')
+	                .replace('i', '\u2518')
+					.replace("=", "\u2500")
+					.replace('|', '\u2502');
 		}
 		
 		public static void incomeTax(Player p) {
