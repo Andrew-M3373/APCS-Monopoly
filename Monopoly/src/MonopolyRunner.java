@@ -67,7 +67,7 @@ public class MonopolyRunner
 								System.out.println("You rolled the number " + diceRoll + " and landed on " + locationConverter(p.getLocation()).split("::")[1]);
 								// special actions for chance and community chest
 								if (p.getLocation() == 2 || p.getLocation() == 17 || p.getLocation() == 33) {
-									Database.gameDatabase.get(gameIndex).getCommunityChestCards();
+									p.setMoney(p.getMoney()+CommunityChestCards.RunCommunityChest());
 								}
 								else if (p.getLocation() == 7 || p.getLocation() == 22 || p.getLocation() == 36) {
 			
