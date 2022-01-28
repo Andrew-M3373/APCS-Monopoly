@@ -7,17 +7,37 @@ public class Player {
 	private int location;
 	private boolean inJail;
 	private int doublesCounter;
+	private int jailCounter;
+	private int reverse;
 	private ArrayList <String[]> inventory = new ArrayList <String[]> ();
 	
-	public Player (String n, int m, int l, boolean j, int dc, ArrayList <String[]> i) {
+	public Player (String n, int m, int l, boolean j, int dc, int jc, int r, ArrayList <String[]> i) {
 		
 		name = n;
 		money = m;
 		location = l;
 		inJail = j;
 		doublesCounter = dc;
+		jailCounter = jc;
+		reverse = r;
 		inventory = i;
 		
+	}
+
+	public int getReverse() {
+		return reverse;
+	}
+
+	public void setReverse(int reverse) {
+		this.reverse = reverse;
+	}
+
+	public int getJailCounter() {
+		return jailCounter;
+	}
+
+	public void setJailCounter(int jailCounter) {
+		this.jailCounter = jailCounter;
 	}
 
 	public String getName() {
@@ -66,6 +86,8 @@ public class Player {
 		this.doublesCounter = doublesCounter;
 	}
 	
-	
+	public ArrayList<String[]> getInventory() {
+		return inventory;
+	}
 	
 }

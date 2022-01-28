@@ -55,6 +55,11 @@ public class MonopolyRunner
 									p.setMoney(p.getMoney()+Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoPrice());
 									System.out.println("Collect $" + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoPrice() + " for passing " + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoTitle());
 								}
+								else if (p.getLocation() < 0) {
+									p.setLocation(p.getLocation()+40);
+									p.setMoney(p.getMoney()+Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoPrice());
+									System.out.println("Collect $" + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoPrice() + " for passing " + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getGoTitle());
+								}
 								
 								// print location that was landed on
 								System.out.println("You rolled the number " + diceRoll + " and landed on " + locationConverter(p.getLocation()).split("^[0-9]{1,3} ")[1]);
@@ -75,11 +80,16 @@ public class MonopolyRunner
 									doubles = false;
 								}
 								
+								// Reverse movement direction if on Free Parking
+								if (p.getLocation() == 20) {
+									p.setReverse(p.getReverse()*-1);
+								}
+								
 								
 								// if landed on a purchasable property, execute this. 
 								if (p.getLocation() != 0 && p.getLocation() != 40 && p.getLocation() != 7 && p.getLocation() != 22 && p.getLocation() != 36 && p.getLocation() != 2 && p.getLocation() != 17 && p.getLocation() != 33 && p.getLocation() != 0 && p.getLocation() != 10 && p.getLocation() != 20 && p.getLocation() != 30 && p.getLocation() != 38 && p.getLocation() != 4) {
-									System.out.println("This property is unowned; would you like to purchase it? (y/n)\n\tThe"
-											+ " price is $" + locationConverter(p.getLocation()).split(" ", 2)[0] + "\n\tYour current balance is $" + p.getMoney());
+									System.out.println("This property is unowned; would you like to purchase it? (y/n)\n\t"
+											+ "Price: $" + locationConverter(p.getLocation()).split(" ", 2)[0] + "\n\tCurrent balance: $" + p.getMoney());
 									
 									String yOrN = scanner.nextLine();
 									if (yOrN.equals("y")) {
@@ -89,9 +99,9 @@ public class MonopolyRunner
 									}
 								}
 								// press enter to move on to the next player's turn
-								if (doubles == true) System.out.println("Press enter to roll again.\n\n\n");
-								else System.out.println("Press enter to continue. ");
-								scanner.nextLine();
+								if (doubles == true) System.out.println("Press enter to roll again or \"i\" to view the inventory.\n\n\n");
+								else System.out.println("Press enter to continue or \"i\" to view the inventory. ");
+								pressEnterOrI(p,scanner);
 							
 							}
 						}
@@ -107,23 +117,32 @@ public class MonopolyRunner
 							if (input == 2) {
 								p.setInJail(false);
 								p.setMoney(p.getMoney()-50);
+								p.setJailCounter(0);
 								doubles = true; 
 								rollAgain = true;
 							}
 							else if (input == 1) {
 								doubles = false;
 								diceRoll = Dice.runDice();
+								p.setJailCounter(p.getJailCounter()+1);
 								if (doubles) {
 									rollAgain = false;
-									p.setLocation(p.getLocation()+diceRoll);
+									p.setLocation(p.getLocation()+(p.getReverse()*diceRoll));
 									System.out.println("You rolled doubles!");
 									p.setInJail(false);
+									p.setJailCounter(0);
 								}
-								else {
-									System.out.println("You didn't roll doubles. Better luck next time!");
+								else if (p.getJailCounter() >= 3) {
+									System.out.println("You didn't roll doubles on your third try, so you paid $50 to get out of jail.");
+									p.setInJail(false);
+									p.setMoney(p.getMoney()-50);
+									p.setJailCounter(0);
+									doubles = true; 
+									rollAgain = true;
+								}
+								else System.out.println("You didn't roll doubles. Better luck next time!");
 								}
 							}
-						}
 						}
 					} while (doubles);
 				}
@@ -144,7 +163,11 @@ public class MonopolyRunner
 			
 			// option of how many players will be playing
 			System.out.println("\nWelcome to the game of " + Database.gameDatabase.get(gameIndex).getTitle() + "!");
-			System.out.println("How many players?");
+			System.out.println("Extra rules:"
+					+ "\n\t(1) Press the letter \"i\" after your turn to view each player's inventory"
+					+ "\n\t(2) Tokens move in reverse after landing on " + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getFreeParkingTitle()
+					+ "\n\t(3) Debugging note: the letter \"i\" may be substituted for \"j\" or \"fp\" to move the token directly to Jail or Free Parking, respectively");
+			System.out.println("\nHow many players?");
 			int playerCount = Integer.parseInt(scanner.next());
 			scanner.nextLine();
 			if (playerCount > 8 || playerCount < 1) {
@@ -167,7 +190,7 @@ public class MonopolyRunner
 				
 				
 				// add the player to the list, and delete the token option for the next player
-				playerList.add(new Player(Database.gameDatabase.get(gameIndex).getPieces().getPiece(pieceIndex-1), 1500, 0, false, 0, new ArrayList <String[]>()));
+				playerList.add(new Player(Database.gameDatabase.get(gameIndex).getPieces().getPiece(pieceIndex-1), 1500, 0, false, 0, 0, 1, new ArrayList <String[]>()));
 				Database.gameDatabase.get(gameIndex).getPieces().removePiece(pieceIndex-1);
 			}
 		}
@@ -235,7 +258,7 @@ public class MonopolyRunner
 		
 		public static int rollDice(Player p, Scanner scanner) {
 			int diceRoll = Dice.runDice(); // Roll the Dice
-			p.setLocation(p.getLocation() + diceRoll); // move the token to the new location
+			p.setLocation(p.getLocation() + (p.getReverse()*diceRoll)); // move the token to the new location
 			if (doubles == true) {
 				System.out.println("You rolled doubles!");
 				p.setDoublesCounter(p.getDoublesCounter() + 1);
@@ -245,11 +268,58 @@ public class MonopolyRunner
 					p.setLocation(10);
 					rollAgain = false; 
 					doubles = false;
-					System.out.println("Press enter to continue.");
-					scanner.nextLine();
+					System.out.println("Press enter to continue or \"i\" to view the inventory.");
+					pressEnterOrI(p,scanner);
 				}
 			}
 			
 			return diceRoll;
+		}
+		
+		public static void pressEnterOrI(Player p, Scanner scanner) {
+			String input = scanner.nextLine();
+			
+			if (input.equals("i")) {
+				if (p.getInventory().size() == 0)
+					System.out.println("\n" + p.getName() + " does not own any properties.");
+				else {
+					System.out.println("\n" + p.getName() + "'s list of owned properties:");
+					
+					for (String[] s : p.getInventory()) {
+						System.out.println(s[0]);
+					}
+				}
+				
+				boolean viewingInventory = true;
+				do {
+					System.out.println("\nPress enter to continue or a player number to view their inventory.");
+					for (int i = 0; i < playerList.size(); i++) {
+						System.out.println("\t(" + (i+1) + ") " + playerList.get(i).getName());
+					}
+					input = scanner.nextLine();
+					if (!input.equals("")) {
+						if (playerList.get(Integer.parseInt(input)-1).getInventory().size() == 0)
+							System.out.println("\n" + playerList.get(Integer.parseInt(input)-1).getName() + " does not own any properties.");
+						else {
+							for (int i = 0; i < playerList.get(Integer.parseInt(input)-1).getInventory().size(); i++)
+								System.out.println(playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[0]);
+								System.out.println("\n" + playerList.get(Integer.parseInt(input)-1).getName() + "'s list of owned properties:");
+						}
+					}
+					else viewingInventory = false;
+				} while (viewingInventory);
+			}
+			
+			else if (input.toLowerCase().equals("j")) {
+				p.setLocation(10);
+				p.setInJail(true);
+				rollAgain = false;
+				doubles = false;
+			}
+			
+			else if (input.toLowerCase().equals("fp")) {
+				p.setLocation(20);
+				p.setReverse(p.getReverse()*-1);
+			}
 		}
 	}

@@ -184,4 +184,8 @@ public class Properties extends Game {
 	public void setLocation3(int location3) {
 		this.location3 = location3;
 	}
+	
+	public int payIncomeTax() {
+		return Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getSpecialSpaces().getIncomeTaxPrice();
+	}
 }

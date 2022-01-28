@@ -7,7 +7,7 @@ public class ChanceCards extends Game {
 			
 		int randomChance = (int)(Math.random() * 5) + 1;
 		
-		System.out.println("******************************");
+		System.out.println("*********** Chance ***********");
 		switch (randomChance) {
 		case 1: System.out.printf("* Go to %-20s *\n******************************\n", Database.gameDatabase.get(MonopolyRunner.getGameIndex()).getSpecialSpaces().getJailTitle());
 		return 10;
