@@ -8,6 +8,7 @@ public class MonopolyRunner
 
 	
 	private static ArrayList<Player> playerList = new ArrayList<Player>();
+	private static boolean[] purchaseProtections = new boolean[40];
 	private static int gameIndex = 0;
 	private static boolean stillPlaying = true;
 	private static boolean doubles = false;
@@ -32,7 +33,6 @@ public class MonopolyRunner
 				
 				// for loop that allows each player to have 1 turn before moving on
 				for (Player p : playerList) {
-					int doublesCounter = 0;
 					System.out.println("\n\n\n" + p.getName() + "'s turn");
 					int diceRoll = 0;
 					rollAgain = true;
@@ -97,16 +97,24 @@ public class MonopolyRunner
 								
 								
 								// if landed on a purchasable property, execute this. 
-								if (p.getLocation() != 0 && p.getLocation() != 40 && p.getLocation() != 7 && p.getLocation() != 22 && p.getLocation() != 36 && p.getLocation() != 2 && p.getLocation() != 17 && p.getLocation() != 33 && p.getLocation() != 0 && p.getLocation() != 10 && p.getLocation() != 20 && p.getLocation() != 30 && p.getLocation() != 38 && p.getLocation() != 4) {
+								if (p.getLocation() != 0 && p.getLocation() != 40 && p.getLocation() != 7 && p.getLocation() != 22 && p.getLocation() != 36 && p.getLocation() != 2 && p.getLocation() != 17 && p.getLocation() != 33 && p.getLocation() != 0 && p.getLocation() != 10 && p.getLocation() != 20 && p.getLocation() != 30 && p.getLocation() != 38 && p.getLocation() != 4 && purchaseProtections[p.getLocation()>=40?p.getLocation()-40:p.getLocation()] == false) {
 									System.out.println("This property is unowned; would you like to purchase it? (y/n)\n\t"
 											+ "Price: $" + locationConverter(p.getLocation()).split("::")[0] + "\n\tCurrent balance: $" + p.getMoney());
 									
 									String yOrN = scanner.nextLine();
-									if (yOrN.equals("y")) {
+									if (yOrN.equals("y") && p.getMoney()>=Integer.parseInt(locationConverter(p.getLocation()).split("::")[0])) {
 										p.setMoney(p.getMoney()-Integer.parseInt(locationConverter(p.getLocation()).split("::")[0]));
 										System.out.println("Your new balance is $"+ p.getMoney());
 										p.addProperty(new String[] {locationConverter(p.getLocation()).split("::")[1], locationConverter(p.getLocation()).split("::")[2], locationConverter(p.getLocation()).split("::")[0]}); //add rent
+										purchaseProtections[p.getLocation()] = true;
 									}
+									else if (yOrN.equals("y")) {
+										System.out.println("Sorry, you don't have enough money to purchase this property.");
+									}
+								}
+								else if (purchaseProtections[p.getLocation()>=40?p.getLocation()-40:p.getLocation()] == true){
+									System.out.println("This property is already owned.");
+									// Here, run rent commands. 
 								}
 								// press enter to move on to the next player's turn
 								if (doubles == true) System.out.println("Press enter to roll again or \"i\" to view the inventory.\n\n\n");
@@ -122,9 +130,15 @@ public class MonopolyRunner
 									+ "\n(1) Attempt to roll doubles"
 									+ "\n(2) Pay the $50 fee");
 							
-							int input = Integer.parseInt(scanner.next());
-							scanner.nextLine();
-							if (input == 2) {
+							int input = 0;
+							try {
+								input = Integer.parseInt(scanner.next());
+								scanner.nextLine();
+							} catch (NumberFormatException exc){
+								System.out.println("Invalid input; lose a turn");
+							}
+							if (input != 1 && input != 2) System.out.println("Invalid input; lose a turn");
+							else if (input == 2) {
 								p.setInJail(false);
 								p.setMoney(p.getMoney()-50);
 								p.setJailCounter(0);
@@ -167,8 +181,17 @@ public class MonopolyRunner
 			for (int i = 1; i <= Database.gameDatabase.size(); i++) {
 				System.out.println("(" + i + ") " + Database.gameDatabase.get(i-1).getTitle());
 			}
-			gameIndex = Integer.parseInt(scanner.next()) - 1;
-			scanner.nextLine();
+			try {
+				gameIndex = Integer.parseInt(scanner.next()) - 1;
+				scanner.nextLine();
+			} catch (NumberFormatException exc){
+				System.out.println("Invalid input. Selecting default game.");
+				gameIndex = 0;
+			}
+			if (gameIndex < 0 || gameIndex >= Database.gameDatabase.size()) {
+				System.out.println("Invalid input. Selecting default game.");
+				gameIndex = 0;
+			}
 			
 			
 			// option of how many players will be playing
@@ -179,10 +202,16 @@ public class MonopolyRunner
 					+ "\n\t(3) Tokens move in reverse after landing on " + Database.gameDatabase.get(gameIndex).getSpecialSpaces().getFreeParkingTitle()
 					+ "\n\t(4) Debugging note: the letter \"i\" may be substituted for \"j\" or \"fp\" to move the token directly to Jail or Free Parking, respectively");
 			System.out.println("\nHow many players?");
-			int playerCount = Integer.parseInt(scanner.next());
-			scanner.nextLine();
+			int playerCount = 0;
+			try {
+				playerCount = Integer.parseInt(scanner.next());
+				scanner.nextLine();
+			} catch (NumberFormatException exc) {
+				System.out.println("Invalid input. Restart the game to try again.");
+				System.exit(0);
+			}
 			if (playerCount > 8 || playerCount < 1) {
-				System.out.println("Please try again with a valid input");
+				System.out.println("Invalid input. Restart the game to try again.");
 				System.exit(0);
 			}
 			
@@ -195,10 +224,14 @@ public class MonopolyRunner
 					System.out.println("(" + j + ") " + Database.gameDatabase.get(gameIndex).getPieces().getPiece(j-1));
 				}
 
-				
-				int pieceIndex = Integer.parseInt(scanner.next());
-				scanner.nextLine();
-				
+				int pieceIndex = 0;
+				try {
+					pieceIndex = Integer.parseInt(scanner.next());
+					scanner.nextLine();
+				} catch (NumberFormatException exc){
+					System.out.println("Invalid input. Selecting first available token.");
+					pieceIndex = 1;
+				}
 				
 				// add the player to the list, and delete the token option for the next player
 				playerList.add(new Player(Database.gameDatabase.get(gameIndex).getPieces().getPiece(pieceIndex-1), 1500, 0, false, 0, 0, 1, new ArrayList <String[]>()));
@@ -322,24 +355,32 @@ public class MonopolyRunner
 						System.out.println("\t(" + (i+1) + ") " + playerList.get(i).getName());
 					}
 					input = scanner.nextLine();
-					if (!input.equals("")) {
-						System.out.println("\nCurrent balance: $" + p.getMoney());
-						
-						if (playerList.get(Integer.parseInt(input)-1).getInventory().size() == 0)
-							System.out.println(playerList.get(Integer.parseInt(input)-1).getName() + " does not own any properties");
-						else {
-							System.out.println("\n" + playerList.get(Integer.parseInt(input)-1).getName() + "'s list of owned properties:");
+					try {
+						if (Integer.parseInt(input) > 0 && Integer.parseInt(input) <= playerList.size()) {
+							System.out.println("\nCurrent balance: $" + p.getMoney());
 							
-							String format = format("| %-25s | %-15s | %-5s |%n");
-							System.out.println(format("a===========================b=================b=======c"));
-							System.out.println(format("| ") + "Property title" + format("            | ") + "Group" + format("           | ") + "Price" + format(" |"));
-							System.out.println(format("j===========================e=================e=======f"));
-							for (int i = 0; i < playerList.get(Integer.parseInt(input)-1).getInventory().size(); i++)
-								System.out.printf(format,playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[0],playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[1],playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[2]);
-							System.out.println(format("g===========================h=================h=======i"));
+							if (playerList.get(Integer.parseInt(input)-1).getInventory().size() == 0)
+								System.out.println(playerList.get(Integer.parseInt(input)-1).getName() + " does not own any properties");
+							else {
+								System.out.println("\n" + playerList.get(Integer.parseInt(input)-1).getName() + "'s list of owned properties:");
+								
+								String format = format("| %-25s | %-15s | %-5s |%n");
+								System.out.println(format("a===========================b=================b=======c"));
+								System.out.println(format("| ") + "Property title" + format("            | ") + "Group" + format("           | ") + "Price" + format(" |"));
+								System.out.println(format("j===========================e=================e=======f"));
+								for (int i = 0; i < playerList.get(Integer.parseInt(input)-1).getInventory().size(); i++)
+									System.out.printf(format,playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[0],playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[1],playerList.get(Integer.parseInt(input)-1).getInventory().get(i)[2]);
+								System.out.println(format("g===========================h=================h=======i"));
+							}
 						}
+						else {
+							System.out.println("Invalid input. Exiting inventory.");
+							viewingInventory = false;
+						}
+					} catch (NumberFormatException exc){
+						System.out.println("Invalid input. Exiting inventory.");
+						viewingInventory = false;
 					}
-					else viewingInventory = false;
 				} while (viewingInventory);
 			}
 			

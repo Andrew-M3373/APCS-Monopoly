@@ -21,10 +21,34 @@ public class RailroadGroup extends Game {
 		railroad2Name = r2n;
 		location2=l2;
 		railroad3Name = r3n;
-		location3=l3;
+		setLocation3(l3);
 		railroad4Name = r4n;
 		location4=l4;
 		
+	}
+
+	public int getLocation1() {
+		return location1;
+	}
+
+	public void setLocation1(int location1) {
+		this.location1 = location1;
+	}
+
+	public int getLocation2() {
+		return location2;
+	}
+
+	public void setLocation2(int location2) {
+		this.location2 = location2;
+	}
+
+	public int getLocation4() {
+		return location4;
+	}
+
+	public void setLocation4(int location4) {
+		this.location4 = location4;
 	}
 
 	public String getRailroadGroupTitle() {
@@ -89,5 +113,13 @@ public class RailroadGroup extends Game {
 	
 	public int getRailroad4Location() {
 		return 35;
+	}
+
+	public int getLocation3() {
+		return location3;
+	}
+
+	public void setLocation3(int location3) {
+		this.location3 = location3;
 	}
 }

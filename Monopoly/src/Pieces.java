@@ -3,14 +3,14 @@ import java.util.ArrayList;
 public class Pieces extends Game{
 
 	private ArrayList<String> list = new ArrayList<String>();
-	private String piece1;
-	private String piece2;
-	private String piece3;
-	private String piece4;
-	private String piece5;
-	private String piece6;
-	private String piece7;
-	private String piece8;
+//	private String piece1;
+//	private String piece2;
+//	private String piece3;
+//	private String piece4;
+//	private String piece5;
+//	private String piece6;
+//	private String piece7;
+//	private String piece8;
 	
 	public Pieces(String p1, String p2, String p3, String p4, String p5, String p6, String p7, String p8) {
 		
