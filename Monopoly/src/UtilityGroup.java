@@ -20,6 +20,22 @@ public class UtilityGroup extends Game {
 		location2=l2;
 	}
 
+	public int getLocation1() {
+		return location1;
+	}
+
+	public void setLocation1(int location1) {
+		this.location1 = location1;
+	}
+
+	public int getLocation2() {
+		return location2;
+	}
+
+	public void setLocation2(int location2) {
+		this.location2 = location2;
+	}
+
 	public String getGroupTitle() {
 		return utilityGroupTitle;
 	}
